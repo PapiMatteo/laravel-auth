@@ -5,6 +5,10 @@
     <div class="container mt-5">
         <h1>Lista progetti</h1>
 
+        <div class="text-end">
+            <a class="btn btn-success" href="{{ route('admin.projects.create') }}">Crea un nuovo progetto</a>
+        </div>
+
         <table class="table table-hover mt-4">
             <thead>
                 <tr>

@@ -1,29 +1,35 @@
 @extends('layouts.admin')
 
 @section('content')
-    <table class="table table-hover my-5 ">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Titolo</th>
-                <th scope="col">Descrizione</th>
-                <th scope="col">Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
 
-            @foreach ($projects as $project)
+    <div class="container mt-5">
+        <h1>Lista progetti</h1>
+
+        <table class="table table-hover mt-4">
+            <thead>
                 <tr>
-                    <th scope="row">{{ $project->id }}</th>
-                    <td>{{ $project->title }}</td>
-                    <td>{{ $project->decription }} </td>
-                    <td>
-
-                    </td>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Azioni</th>
                 </tr>
-            @endforeach
-            
-            
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+    
+                @foreach ($projects as $project)
+                    <tr>
+                        <th scope="row">{{ $project->id }}</th>
+                        <td>{{ $project->title }}</td>
+                        <td >{{ substr($project->description, 0, 100) . "..." }} </td>
+                        <td>
+                            <a class="btn btn-success" href="{{ route('admin.projects.show', ['project'=> $project->slug]) }}">Mostra</a>
+                        </td>
+                    </tr>
+                @endforeach
+                
+                
+            </tbody>
+        </table>
+    </div>
+    
 @endsection

@@ -14,10 +14,10 @@ class Project extends Model
 
     // Mutator
 
-    public function setTitleAttriblute($value) {
+    public function setTitleAttribute($_title) {
 
-        $this->attributes['title'] = $value;
-        $this->attribute['slug']   = Str::slug($value);
+        $this->attributes['title'] = $_title;
+        $this->attributes['slug']  = Str::slug($_title);
 
     }
 }

@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <h2 class="text-center">Crea un nuovo post</h2>
 
-        @if ($errors->any())
+        {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -12,15 +12,20 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         <form class="mt-5" action="{{ route('admin.projects.store') }}" method="POST">
             @csrf
 
-            <div class="mb-3">
+            <div class="mb-3 has-validation">
                 <label for="title" class="form-label">Titolo</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}">
+                @error('title')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+            
+            
             
             <div class="mb-3">
                 <label for="description" class="form-label">Descrizione</label>

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -37,6 +38,12 @@ class ProjectController extends Controller
 
         $new_project = new Project();
         $new_project->fill($form_data);
+
+        if($request->hasFile('cover_image')) {
+            $path = Storage::put('project_images', $request->cover_image);
+            $new_project->cover_image = $path;
+        }
+
         $new_project->save();
 
         return redirect()->route('admin.projects.show', ['project' => $new_project->slug]);
@@ -45,6 +52,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
+                    //  Dependence Injection
     public function show(Project $project)
     {
         return view('admin.projects.show', compact('project'));
@@ -64,6 +72,15 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $form_data = $request->validated();
+
+        if($request->hasFile('cover_image')) {
+            if($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+
+            $path = Storage::put('project_images', $request->cover_image);
+            $form_data['cover_image'] = $path;
+        }
 
         $project->update($form_data);
 
